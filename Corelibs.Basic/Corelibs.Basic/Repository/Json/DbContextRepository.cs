@@ -12,7 +12,7 @@ namespace Corelibs.Basic.Repository
         private readonly TDbContext _dbContext;
         private readonly string _tableName;
 
-        public JsonDbContextRepository(TDbContext dbContext, string tableName)
+        public DbContextRepository(TDbContext dbContext, string tableName)
         {
             _dbContext = dbContext;
             _tableName = tableName;
