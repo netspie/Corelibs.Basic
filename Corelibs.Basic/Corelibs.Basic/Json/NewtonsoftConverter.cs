@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Common.Basic.Json
 {
     public class NewtonsoftJsonConverter : IJsonConverter
     {
-
         T IJsonConverter.Deserialize<T>(string json)
         {
             try
