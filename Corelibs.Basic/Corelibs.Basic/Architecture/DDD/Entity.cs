@@ -2,7 +2,14 @@
 {
     public abstract class Entity : IEntity
     {
-        public string ID { get; init; }
+        public Entity() { }
+
+        public Entity(string id)
+        {
+            ID = id;
+        }
+
+        public string ID { get; init; } = new("");
 
         public uint Version { get; private set; }
         uint IEntity.Version { get => Version; set { Version = value; } }
