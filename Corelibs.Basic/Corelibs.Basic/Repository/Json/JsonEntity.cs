@@ -1,14 +1,13 @@
-﻿namespace Corelibs.Basic.Repository
-{
-    public class JsonEntity
-    {
-        public JsonEntity(string id, string content)
-        {
-            ID = id;
-            Content = content;
-        }
+﻿using Common.Basic.DDD;
 
-        public string ID { get; }
-        public string Content { get; }
+namespace Corelibs.Basic.Repository
+{
+    public class JsonEntity : IEntity
+    {
+        public JsonEntity() { }
+
+        public string ID { get; init; } = new("");
+        public string Content { get; init; } = new("");
+        public uint Version { get; set; }
     }
 }

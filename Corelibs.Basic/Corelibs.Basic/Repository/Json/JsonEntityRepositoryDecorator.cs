@@ -1,19 +1,22 @@
 ﻿using Common.Basic.Blocks;
 using Common.Basic.DDD;
+using Common.Basic.Functional;
 using Common.Basic.Json;
 using Common.Basic.Repository;
 
 namespace Corelibs.Basic.Repository
 {
-    public class JsonEntityRepositoryDecorator<T, TDbContext> : IRepository<T>
-       where T : class, IEntity
+    public class JsonEntityRepositoryDecorator<TEntity, TDataEntity> : IRepository<TEntity>
+        where TEntity : class, IEntity
+        where TDataEntity : JsonEntity, new()
     {
         private readonly IJsonConverter _jsonConverter;
-        private readonly IRepository<JsonEntity> _jsonTableRepository;
+        private readonly IRepository<TDataEntity> _jsonTableRepository;
 
-        public JsonEntityRepositoryDecorator(IJsonConverter jsonConverter, IRepository<JsonEntity> jsonTableRepository)
+        public JsonEntityRepositoryDecorator(
+            IRepository<TDataEntity> jsonTableRepository)
         {
-            _jsonConverter = jsonConverter;
+            _jsonConverter = new NewtonsoftJsonConverter();
             _jsonTableRepository = jsonTableRepository;
         }
 
@@ -27,47 +30,54 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Result<bool>> ExistsOfName(string name, Func<T, string> getName)
+        public Task<Result<bool>> ExistsOfName(string name, Func<TEntity, string> getName)
         {
             throw new NotImplementedException(); // to delete?
         }
 
-        public Task<Result<T[]>> GetAll()
+        public Task<Result<TEntity[]>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<T[]>> GetAll(Action<int> setProgress, CancellationToken ct)
+        public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Result<T>> GetBy(string id)
+        public async Task<Result<TEntity>> GetBy(string id)
         {
             var jsonEntityResult = await _jsonTableRepository.GetBy(id);
             if (!jsonEntityResult.IsSuccess)
-                return Result<T>.Failure().With(jsonEntityResult);
+                return Result<TEntity>.Failure().With(jsonEntityResult);
 
             var jsonEntity = jsonEntityResult.Get();
-            var entity = _jsonConverter.Deserialize<T>(jsonEntity.Content);
+            if (jsonEntity.IsNull())
+                return Result<TEntity>.Success();
 
-            return Result<T>.Success(entity);
+            var entity = _jsonConverter.Deserialize<TEntity>(jsonEntity.Content);
+
+            return Result<TEntity>.Success(entity);
         }
 
-        public Task<Result<T[]>> GetBy(IList<string> ids)
+        public Task<Result<TEntity[]>> GetBy(IList<string> ids)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<T>> GetOfName(string name, Func<T, string> getName)
+        public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
         {
             throw new NotImplementedException(); // to delete?
         }
 
-        public Task<Result> Save(T item)
+        public Task<Result> Save(TEntity item)
         {
             var json = _jsonConverter.Serialize(item);
-            var jsonEntity = new JsonEntity(item.ID, json);
+            var jsonEntity = new TDataEntity()
+            {
+                ID = item.ID,
+                Content = json
+            };
 
             return _jsonTableRepository.Save(jsonEntity);
         }

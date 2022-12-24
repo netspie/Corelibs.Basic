@@ -5,17 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Corelibs.Basic.Repository
 {
-    public class DbContextRepository<T, TDbContext> : IRepository<T>
-        where T : class, IEntity
-        where TDbContext : DbContext
+    public class DbContextRepository<TEntity> : IRepository<TEntity>
+        where TEntity : class, IEntity
     {
-        private readonly TDbContext _dbContext;
-        private readonly string _tableName;
+        private readonly DbContext _dbContext;
 
-        public DbContextRepository(TDbContext dbContext, string tableName)
+        public DbContextRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
-            _tableName = tableName;
         }
 
         public Task<Result> Clear()
@@ -28,42 +25,42 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Result<bool>> ExistsOfName(string name, Func<T, string> getName)
+        public Task<Result<bool>> ExistsOfName(string name, Func<TEntity, string> getName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<T[]>> GetAll()
+        public Task<Result<TEntity[]>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<T[]>> GetAll(Action<int> setProgress, CancellationToken ct)
+        public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Result<T>> GetBy(string id)
+        public async Task<Result<TEntity>> GetBy(string id)
         {
             var set = GetSet();
-            T entity = await set.FirstOrDefaultAsync(e => e.ID == id);
+            TEntity entity = await set.FirstOrDefaultAsync(e => e.ID == id);
             if (entity == null)
-                return Result<T>.Failure();
+                return Result<TEntity>.Success();
 
-            return Result<T>.Success(entity);
+            return Result<TEntity>.Success(entity);
         }
 
-        public Task<Result<T[]>> GetBy(IList<string> ids)
+        public Task<Result<TEntity[]>> GetBy(IList<string> ids)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<T>> GetOfName(string name, Func<T, string> getName)
+        public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Result> Save(T item)
+        public async Task<Result> Save(TEntity item)
         {
             var set = GetSet();
             await set.AddAsync(item);
@@ -75,9 +72,9 @@ namespace Corelibs.Basic.Repository
             return Result.Success();
         }
 
-        private DbSet<T> GetSet()
+        private DbSet<TEntity> GetSet()
         {
-            return _dbContext.Set<T>(_tableName);
+            return _dbContext.Set<TEntity>();
         }
     }
 }
