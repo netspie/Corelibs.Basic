@@ -17,11 +17,21 @@ namespace Corelibs.Basic.Repository
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                var response = await next(command, ct);
+                try
+                {
+                    var response = await next(command, ct);
 
-                await transaction.CommitAsync();
+                    await transaction.CommitAsync();
 
-                return response;
+                    return response;
+                }
+                catch (Exception ex) 
+                {
+                    await transaction.RollbackAsync();
+                    Console.WriteLine(ex.ToString());
+
+                    return default;
+                }
             }
         }
     }
