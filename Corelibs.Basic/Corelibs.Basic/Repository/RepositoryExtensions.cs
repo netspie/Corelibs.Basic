@@ -45,7 +45,7 @@ namespace Common.Basic.Repository
                 return result;
 
             string id = Guid.NewGuid().ToString();
-            T entity = (T) Activator.CreateInstance(typeof(T), new object[] { id, name });
+            T entity = (T)Activator.CreateInstance(typeof(T), new object[] { id, name });
 
             var saveResult = await repository.Save(entity);
             if (!saveResult.IsSuccess)
@@ -118,6 +118,21 @@ namespace Common.Basic.Repository
 
         public static Task<T[]> GetAll<T>(this IRepository<T> repository, Result result) =>
             repository.GetAll().Set(result);
+
+        public static Task Save<T>(this IRepository<T> repository, T entity, Result result) =>
+            repository.Save(entity).AddTo(result);
+
+        public static async Task<T> GetIfExistsOrCreate<T>(this IRepository<T> repository, string id, Func<T> createEntity, Result result)
+        {
+            var getResult = await repository.GetIfExistsOrCreate(id, createEntity).AddTo(result);
+            return getResult.Get();
+        }
+
+        public static async Task<T> GetIfExistsOrCreateAndSave<T>(this IRepository<T> repository, string id, Func<T> createEntity, Result result)
+        {
+            var getResult = await repository.GetIfExistsOrCreateAndSave(id, createEntity).AddTo(result);
+            return getResult.Get();
+        }
 
         public static async Task<Result> Save<T>(this IRepository<T> repository, params T[] entities)
         {
