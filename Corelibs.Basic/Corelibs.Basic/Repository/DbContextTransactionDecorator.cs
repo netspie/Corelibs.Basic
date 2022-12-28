@@ -3,24 +3,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Corelibs.Basic.Repository
 {
-    public class DbContextTransactionBehaviour<TCommand, TResponse> : IPipelineBehavior<TCommand, TResponse>
+    public class DbContextTransactionDecorator<TCommand, TResponse> : ICommandHandler<TCommand, TResponse>
         where TCommand : ICommand<TResponse>
     {
+        private readonly ICommandHandler<TCommand, TResponse> _decorated;
         private readonly DbContext _context;
 
-        public DbContextTransactionBehaviour(DbContext context)
+        public DbContextTransactionDecorator(ICommandHandler<TCommand, TResponse> decorated, DbContext context)
         {
+            _decorated = decorated;
             _context = context;
         }
 
-        public async ValueTask<TResponse> Handle(TCommand command, CancellationToken ct, MessageHandlerDelegate<TCommand, TResponse> next)
+        public async ValueTask<TResponse> Handle(TCommand command, CancellationToken ct)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    var entries = _context.ChangeTracker.Entries().ToArray();
-                    var response = await next(command, ct);
+                    var response = await _decorated.Handle(command, ct);
 
                     await transaction.CommitAsync();
 
@@ -28,9 +29,9 @@ namespace Corelibs.Basic.Repository
                 }
                 catch (Exception ex) 
                 {
-                    //await transaction.RollbackAsync();
+                    await transaction.RollbackAsync();
                     Console.WriteLine(ex.ToString());
-                    throw ex;
+
                     return default;
                 }
             }

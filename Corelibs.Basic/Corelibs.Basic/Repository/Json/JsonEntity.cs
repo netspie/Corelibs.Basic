@@ -6,8 +6,8 @@ namespace Corelibs.Basic.Repository
     {
         public JsonEntity() { }
 
-        public string ID { get; init; } = new("");
-        public string Content { get; init; } = new("");
+        public string ID { get; set; } = new("");
+        public string Content { get; set; } = new("");
         public uint Version { get; set; }
     }
 }

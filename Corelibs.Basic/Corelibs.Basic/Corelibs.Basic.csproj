@@ -4,8 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<DefaultItemExcludes>$(DefaultItemExcludes);Common.Basic\**\*.meta</DefaultItemExcludes>
-	<DefaultItemExcludes>$(DefaultItemExcludes);Common.Basic\**\*.asmdef</DefaultItemExcludes>
 	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 

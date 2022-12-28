@@ -60,9 +60,17 @@ namespace Corelibs.Basic.Repository
             return Result<TEntity>.Success(entity);
         }
 
-        public Task<Result<TEntity[]>> GetBy(IList<string> ids)
+        public async Task<Result<TEntity[]>> GetBy(IList<string> ids)
         {
-            throw new NotImplementedException();
+            var result = Result<TEntity[]>.Success();
+
+            var jsonEntitiesResult = await _jsonTableRepository.GetBy(ids);
+            if (!jsonEntitiesResult.ValidateSuccessAndValues())
+                return result.Fail().With(jsonEntitiesResult);
+
+            var jsonEntities = jsonEntitiesResult.Get();
+            var entities = jsonEntities.Select(e => _jsonConverter.Deserialize<TEntity>(e.Content)).ToArray();
+            return Result<TEntity[]>.Success(entities);
         }
 
         public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
@@ -70,16 +78,28 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException(); // to delete?
         }
 
-        public Task<Result> Save(TEntity item)
+        public async Task<Result> Save(TEntity item)
         {
-            var json = _jsonConverter.Serialize(item);
-            var jsonEntity = new TDataEntity()
-            {
-                ID = item.ID,
-                Content = json
-            };
+            var result = Result.Success();
 
-            return _jsonTableRepository.Save(jsonEntity);
+            var json = _jsonConverter.Serialize(item);
+
+            var entity = await _jsonTableRepository.Get(item.ID, result);
+            if (entity != null)
+            {
+                entity.Content = json;
+                entity.Version = item.Version++;
+            }
+            else
+            {
+                entity = new TDataEntity()
+                {
+                    ID = item.ID,
+                    Content = json
+                };
+            }
+
+            return _jsonTableRepository.Save(entity);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Common.Basic.DDD;
 using Common.Basic.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Corelibs.Basic.Repository
 {
@@ -42,17 +43,26 @@ namespace Corelibs.Basic.Repository
 
         public async Task<Result<TEntity>> GetBy(string id)
         {
+            var result = Result<TEntity>.Success();
+
             var set = GetSet();
             TEntity entity = await set.FirstOrDefaultAsync(e => e.ID == id);
             if (entity == null)
-                return Result<TEntity>.Success();
+                return result;
 
-            return Result<TEntity>.Success(entity);
+            return result.With(entity);
         }
 
-        public Task<Result<TEntity[]>> GetBy(IList<string> ids)
+        public async Task<Result<TEntity[]>> GetBy(IList<string> ids)
         {
-            throw new NotImplementedException();
+            var result = Result<TEntity[]>.Success();
+
+            var set = GetSet();
+            TEntity[] entities = await set.Where(e => ids.Contains(e.ID)).ToArrayAsync();
+            if (entities == null)
+                return result.Fail();
+
+            return Result<TEntity[]>.Success(entities);
         }
 
         public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
@@ -63,7 +73,10 @@ namespace Corelibs.Basic.Repository
         public async Task<Result> Save(TEntity item)
         {
             var set = GetSet();
-            await set.AddAsync(item);
+
+            var entity = await set.FindAsync(item.ID);
+            if (entity == null)
+                await set.AddAsync(item);
 
             var entriesAddedCount = await _dbContext.SaveChangesAsync();
             if (entriesAddedCount == 0)
