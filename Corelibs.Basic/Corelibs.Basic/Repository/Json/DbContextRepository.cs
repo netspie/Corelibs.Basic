@@ -31,9 +31,14 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Result<TEntity[]>> GetAll()
+        public async Task<Result<TEntity[]>> GetAll()
         {
-            throw new NotImplementedException();
+            var set = GetSet();
+            TEntity[] entities = await set.ToArrayAsync();
+            if (entities == null)
+                return Result<TEntity[]>.Failure();
+
+            return Result<TEntity[]>.Success(entities);
         }
 
         public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)

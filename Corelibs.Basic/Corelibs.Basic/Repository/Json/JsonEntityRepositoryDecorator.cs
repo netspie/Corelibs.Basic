@@ -35,9 +35,17 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException(); // to delete?
         }
 
-        public Task<Result<TEntity[]>> GetAll()
+        public async Task<Result<TEntity[]>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = Result<TEntity[]>.Success();
+
+            var jsonEntitiesResult = await _jsonTableRepository.GetAll();
+            if (!jsonEntitiesResult.ValidateSuccessAndValues())
+                return result.Fail().With(jsonEntitiesResult);
+
+            var jsonEntities = jsonEntitiesResult.Get();
+            var entities = jsonEntities.Select(e => _jsonConverter.Deserialize<TEntity>(e.Content)).ToArray();
+            return Result<TEntity[]>.Success(entities);
         }
 
         public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)
