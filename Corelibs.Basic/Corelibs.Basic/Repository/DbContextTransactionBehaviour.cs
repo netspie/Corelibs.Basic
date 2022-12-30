@@ -1,10 +1,11 @@
-﻿using Mediator;
+﻿using Common.Basic.Blocks;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 
 namespace Corelibs.Basic.Repository
 {
-    public class DbContextTransactionBehaviour<TCommand, TResponse> : IPipelineBehavior<TCommand, TResponse>
-        where TCommand : ICommand<TResponse>
+    public class DbContextTransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : ICommand<TResponse>
     {
         private readonly DbContext _context;
 
@@ -13,7 +14,7 @@ namespace Corelibs.Basic.Repository
             _context = context;
         }
 
-        public async ValueTask<TResponse> Handle(TCommand command, CancellationToken ct, MessageHandlerDelegate<TCommand, TResponse> next)
+        public async ValueTask<TResponse> Handle(TRequest command, CancellationToken ct, MessageHandlerDelegate<TRequest, TResponse> next)
         {
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -21,8 +22,12 @@ namespace Corelibs.Basic.Repository
                 {
                     var entries = _context.ChangeTracker.Entries().ToArray();
                     var response = await next(command, ct);
+                    if (response is Result result && !result.IsSuccess)
+                        return response;
 
-                    await transaction.CommitAsync();
+                    bool isCommand = typeof(TRequest).GetInterface(typeof(ICommand).Name) != null;
+                    if (isCommand)
+                        await transaction.CommitAsync();
 
                     return response;
                 }
