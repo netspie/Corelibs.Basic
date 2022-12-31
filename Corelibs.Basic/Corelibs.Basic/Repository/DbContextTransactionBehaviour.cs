@@ -25,7 +25,7 @@ namespace Corelibs.Basic.Repository
                     if (response is Result result && !result.IsSuccess)
                         return response;
 
-                    bool isCommand = typeof(TRequest).GetInterface(typeof(ICommand).Name) != null;
+                    bool isCommand = typeof(TRequest).GetInterface(typeof(IBaseCommand).Name) != null;
                     if (isCommand)
                         await transaction.CommitAsync();
 
