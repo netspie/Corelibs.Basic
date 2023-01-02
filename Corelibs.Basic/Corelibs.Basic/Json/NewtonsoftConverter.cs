@@ -8,7 +8,12 @@ namespace Common.Basic.Json
         {
             try
             {
-                return JsonConvert.DeserializeObject<T>(json);
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                };
+
+                return JsonConvert.DeserializeObject<T>(json, jsonSettings);
             }
             catch (Exception ex)
             {

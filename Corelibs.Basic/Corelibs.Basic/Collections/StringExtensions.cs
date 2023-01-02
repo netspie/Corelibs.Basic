@@ -38,11 +38,33 @@ namespace Common.Basic.Collections
             if (firstIndex >= secondIndex)
                 return false;
 
-            result = str.Substring(firstIndex, secondIndex - firstIndex);
+            result = str.Substring(firstIndex + 1, secondIndex - firstIndex - 1);
             if (result.IsNullOrEmpty())
                 return false;
 
             return true;
+        }
+
+        public static bool Substrings(
+            this string str, char firstCharacter, char secondCharacter, out string[] result)
+        {
+            var list = new List<string>();
+
+            const int iCountLimit = 1000;
+            int i = 0;
+            while (i < iCountLimit)
+            {
+                if (!str.Substring(firstCharacter, secondCharacter, out string singleResult, out int firstIndex, out int secondIndex))
+                    break;
+
+                str = str.Remove(0, secondIndex);
+                list.Add(singleResult);
+                i++;
+            }
+
+            result = list.ToArray();
+
+            return !list.IsEmpty();
         }
 
         public static bool SubstringAfter(this string str, char character, out string result)
@@ -80,5 +102,22 @@ namespace Common.Basic.Collections
 
             return str;
         }
-    }
+
+        public static string[] ToLower(this IEnumerable<string> str) =>
+            str.ForEach(s => s.ToLower()).ToArray();
+
+        public static string[] ToUpper(this IEnumerable<string> str) =>
+           str.ForEach(s => s.ToUpper()).ToArray();
+
+        public static string Remove(this string str, string ocurrence) =>
+           str.Replace(ocurrence, "");
+
+        public static string Remove(this string str, params string[] ocurrences)
+        {
+            foreach (var ocurrence in ocurrences)
+                str = str.Remove(ocurrence);
+
+            return str;
+        }
+}
 }
