@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Common.Basic.Collections
+﻿namespace Common.Basic.Collections
 {
     public static class EnumerableFlattenExtensions
     {
+        public static IEnumerable<T> Flatten<T>(
+           this T source,
+           Func<T, IEnumerable<T>> getChildrenFunction)
+        {
+            var initialChildren = getChildrenFunction(source);
+            return initialChildren.Flatten(getChildrenFunction, 0);
+        }
+
         public static IEnumerable<T> Flatten<T>(
             this T source,
             Func<T, IEnumerable<T>> getChildrenFunction,
