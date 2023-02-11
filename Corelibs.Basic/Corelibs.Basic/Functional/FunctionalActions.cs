@@ -1,11 +1,8 @@
 ﻿using Common.Basic.Collections;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Common.Basic.Functional
 {
-    public static class FunctionalActions
+    public static class ConditionalAction
     {
         public static bool IfOkThenAdd<T>(this bool value, List<T> list, T item, int index)
         {
@@ -30,5 +27,14 @@ namespace Common.Basic.Functional
 
         public static Action<T1, T2> BranchAction<T1, T2>(params Action<T1, T2>[] actions) =>
             (arg1, arg2) => actions.ForEach(a => a?.Invoke(arg1, arg2));
+
+        public static void AssignIfNotNull<T>(ref T @object, T? value)
+        {
+            if (value is string strValue && strValue.IsNullOrEmpty())
+                return;
+
+            if (value != null)
+                @object = value;
+        }
     }
 }

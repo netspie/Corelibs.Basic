@@ -9,5 +9,8 @@ namespace Corelibs.Basic.Colors
 
         public static string ToRgbaString(this Color color) =>
             $"rgba({color.R}, {color.G}, {color.B}, {color.A / 255})";
+
+        public static Color ToColor(this int? argb) =>
+            Color.FromArgb(argb.Value);
     }
 }
