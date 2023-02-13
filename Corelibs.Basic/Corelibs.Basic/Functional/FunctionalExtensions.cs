@@ -175,5 +175,25 @@ namespace Common.Basic.Functional
 
             return objectName == checkTypeName;
         }
+
+        public static async Task InvokeIfOk(this Func<Task> func)
+        {
+            if (func != null && func.GetInvocationList().Length > 0)
+            {
+                var task = func?.Invoke();
+                if (task != null)
+                    await task;
+            }
+        }
+
+        public static async Task InvokeIfOk<T1>(this Func<T1, Task> func, T1 arg1)
+        {
+            if (func != null && func.GetInvocationList().Length > 0)
+            {
+                var task = func?.Invoke(arg1);
+                if (task != null)
+                    await task;
+            }
+        }
     }
 }
