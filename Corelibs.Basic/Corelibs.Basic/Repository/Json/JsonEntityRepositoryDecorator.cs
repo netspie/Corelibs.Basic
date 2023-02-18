@@ -27,7 +27,7 @@ namespace Corelibs.Basic.Repository
 
         public Task<Result> Delete(string id)
         {
-            throw new NotImplementedException();
+            return _jsonTableRepository.Delete(id);
         }
 
         public Task<Result<bool>> ExistsOfName(string name, Func<TEntity, string> getName)

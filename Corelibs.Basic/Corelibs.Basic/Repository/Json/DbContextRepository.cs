@@ -1,5 +1,6 @@
 ﻿using Common.Basic.Blocks;
 using Common.Basic.DDD;
+using Common.Basic.Functional;
 using Common.Basic.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,18 @@ namespace Corelibs.Basic.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Result> Delete(string id)
+        public async Task<Result> Delete(string id)
         {
-            throw new NotImplementedException();
+            var result = Result.Success();
+
+            var set = GetSet();
+            TEntity entity = await set.FirstOrDefaultAsync(e => e.ID == id);
+            if (entity == null)
+                return result.Fail();
+
+            set.Remove(entity);
+
+            return result;
         }
 
         public Task<Result<bool>> ExistsOfName(string name, Func<TEntity, string> getName)
