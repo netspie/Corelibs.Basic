@@ -6,7 +6,7 @@ using Common.Basic.Repository;
 
 namespace Corelibs.Basic.Repository
 {
-    public class JsonEntityRepositoryDecorator<TEntity, TDataEntity> : IRepository<TEntity>
+    public class JsonEntityRepositoryDecorator<TEntity, TDataEntity> : IRepository<TEntity>, IReadRepository
         where TEntity : class, IEntity
         where TDataEntity : JsonEntity, new()
     {
@@ -66,6 +66,12 @@ namespace Corelibs.Basic.Repository
             var entity = _jsonConverter.Deserialize<TEntity>(jsonEntity.Content);
 
             return Result<TEntity>.Success(entity);
+        }
+
+        public async Task GetBy(string id, Result result)
+        {
+            var resultLocal = await GetBy(id);
+            result.Add(resultLocal);
         }
 
         public async Task<Result<TEntity[]>> GetBy(IList<string> ids)

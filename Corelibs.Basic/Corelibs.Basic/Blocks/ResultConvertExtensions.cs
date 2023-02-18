@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Common.Basic.Blocks
@@ -108,6 +109,32 @@ namespace Common.Basic.Blocks
 
             myResult.Add(result);
             return result;
+        }
+
+        public static T GetNestedValue<T>(this Result result)
+        {
+            if (result.Value == null)
+            {
+                foreach (var subResult in result.SubResults)
+                {
+                    var subValue = GetNestedValue<T>(subResult);
+                    if (subValue != null)
+                        return subValue;
+                }
+
+                return default;
+            }
+
+            var desiredType = typeof(T);
+            var valueType = result.Value.GetType();
+
+            if (valueType.IsSubclassOf(desiredType))
+                return (T) result.Value;
+
+            if (desiredType.IsInterface && valueType.GetInterface(desiredType.Name) != null)
+                return (T) result.Value;
+
+            return default;
         }
     }
 }

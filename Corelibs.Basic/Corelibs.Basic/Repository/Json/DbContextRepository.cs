@@ -2,11 +2,10 @@
 using Common.Basic.DDD;
 using Common.Basic.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Corelibs.Basic.Repository
 {
-    public class DbContextRepository<TEntity> : IRepository<TEntity>
+    public class DbContextRepository<TEntity> : IRepository<TEntity>, IReadRepository
         where TEntity : class, IEntity
     {
         private readonly DbContext _dbContext;
@@ -56,6 +55,12 @@ namespace Corelibs.Basic.Repository
                 return result;
 
             return result.With(entity);
+        }
+
+        public async Task GetBy(string id, Result result)
+        {
+            var resultLocal = await GetBy(id);
+            result.Add(resultLocal);
         }
 
         public async Task<Result<TEntity[]>> GetBy(IList<string> ids)
