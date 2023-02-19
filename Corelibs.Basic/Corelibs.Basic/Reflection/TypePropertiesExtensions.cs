@@ -20,5 +20,21 @@ namespace Corelibs.Basic.Reflection
 
             return type.GetProperties(new[] { name }, caseSensitive).FirstOrDefault();
         }
+
+        public static T GetPropertyValue<T>(this object @object)
+        {
+            var type = @object.GetType();
+
+            var property = type.GetProperties().FirstOrDefault(p => p.PropertyType == type);
+            if (property == null)
+                return default;
+
+            var value = property.GetValue(@object);
+            if (value is T tValue)
+                return tValue;
+
+            return default;
+
+        }
     }
 }
