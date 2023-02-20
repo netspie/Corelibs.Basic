@@ -23,9 +23,11 @@ namespace Corelibs.Basic.Reflection
 
         public static T GetPropertyValue<T>(this object @object)
         {
-            var type = @object.GetType();
+            var objectType = @object.GetType();
+            var propertyType = typeof(T);
 
-            var property = type.GetProperties().FirstOrDefault(p => p.PropertyType == type);
+            var properties = objectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var property = properties.FirstOrDefault(p => p.PropertyType == propertyType);
             if (property == null)
                 return default;
 
@@ -34,7 +36,6 @@ namespace Corelibs.Basic.Reflection
                 return tValue;
 
             return default;
-
         }
     }
 }
