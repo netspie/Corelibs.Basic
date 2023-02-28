@@ -32,6 +32,10 @@ namespace Corelibs.Basic.Repository
 
             set.Remove(entity);
 
+            var entriesAddedCount = await _dbContext.SaveChangesAsync();
+            if (entriesAddedCount == 0)
+                return Result.Failure();
+
             return result;
         }
 
