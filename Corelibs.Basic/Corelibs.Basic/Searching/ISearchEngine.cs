@@ -2,8 +2,11 @@
 {
     public interface ISearchEngine<T>
     {
-        void Add(SearchIndexData data);
-        void Add(IEnumerable<SearchIndexData> data);
+        bool Add(SearchIndexData data);
+        bool Add(IEnumerable<SearchIndexData> data);
+        bool Update(SearchIndexData data, string newName);
+        bool Delete(SearchIndexData data);
+
         SearchIndexData[] Search(string name, SearchType searchType = SearchType.Full);
     }
 
@@ -15,5 +18,11 @@
         Full,
         Start,
         End
+    }
+
+    public static class SearchEngineExtensions
+    {
+        public static void Add<T>(this ISearchEngine<T> engine, string id, string name) =>
+            engine.Add(new SearchIndexData(id, name));
     }
 }
