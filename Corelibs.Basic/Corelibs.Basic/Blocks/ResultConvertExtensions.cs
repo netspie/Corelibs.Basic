@@ -128,6 +128,9 @@ namespace Common.Basic.Blocks
             var desiredType = typeof(T);
             var valueType = result.Value.GetType();
 
+            if (valueType.Equals(desiredType))
+                return (T) result.Value;
+
             if (valueType.IsSubclassOf(desiredType))
                 return (T) result.Value;
 

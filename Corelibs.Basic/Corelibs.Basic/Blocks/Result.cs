@@ -1,4 +1,6 @@
-﻿namespace Common.Basic.Blocks
+﻿using Newtonsoft.Json.Linq;
+
+namespace Common.Basic.Blocks
 {
     public class Result
     {
@@ -361,9 +363,15 @@
             return this;
         }
 
-        public new Result<T> With(params object[] values)
+        public new Result<T> With(object value)
         {
-            values.ToList().ForEach(v => Add(Result.Success(v)));
+            Add(new Result(value));
+            return this;
+        }
+
+        public Result<T> With(IEnumerable<object> values)
+        {
+            Add(new Result(values));
             return this;
         }
 
