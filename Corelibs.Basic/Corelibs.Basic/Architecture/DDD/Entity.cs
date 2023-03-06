@@ -1,4 +1,7 @@
-﻿namespace Common.Basic.DDD
+﻿using Common.Basic.Collections;
+using Common.Basic.Functional;
+
+namespace Common.Basic.DDD
 {
     public abstract class Entity : IEntity
     {
@@ -15,5 +18,21 @@
         uint IEntity.Version { get => Version; set { Version = value; } }
 
         public static implicit operator bool(Entity entity) => entity != null;
+
+        public override string ToString()
+        {
+            var result = ID;
+
+            var type = GetType();
+            var nameProperty = type.GetProperty("Name");
+            if (nameProperty != null)
+            {
+                var name = nameProperty.GetValue(this) as string;
+                if (!name.IsNullOrEmpty())
+                    result = $"{name} - {ID}";
+            }
+
+            return result;
+        }
     }
 }
