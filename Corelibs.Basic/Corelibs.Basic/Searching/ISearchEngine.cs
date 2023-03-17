@@ -22,7 +22,7 @@
 
     public static class SearchEngineExtensions
     {
-        public static void Add<T>(this ISearchEngine<T> engine, string id, string name) =>
+        public static bool Add<T>(this ISearchEngine<T> engine, string id, string name) =>
             engine.Add(new SearchIndexData(id, name));
     }
 }
