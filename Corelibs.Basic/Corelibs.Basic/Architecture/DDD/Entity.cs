@@ -1,5 +1,4 @@
 ﻿using Common.Basic.Collections;
-using Common.Basic.Functional;
 
 namespace Common.Basic.DDD
 {
@@ -34,5 +33,8 @@ namespace Common.Basic.DDD
 
             return result;
         }
+
+        public static string GetRandomName() =>
+            $"Item - {new string(Guid.NewGuid().ToString().Take(8).ToArray())}";
     }
 }
