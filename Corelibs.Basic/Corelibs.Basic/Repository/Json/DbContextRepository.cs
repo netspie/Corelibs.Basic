@@ -103,9 +103,6 @@ namespace Corelibs.Basic.Repository
                 await set.AddAsync(item);
 
             var entriesAddedCount = await _dbContext.SaveChangesAsync();
-            if (entriesAddedCount == 0)
-                return Result.Failure();
-
             return Result.Success();
         }
 
