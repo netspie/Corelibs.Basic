@@ -215,5 +215,13 @@ namespace Common.Basic.Collections
                 }
             }
         }
+
+        public static IEnumerable<TTarget> SelectOrDefault<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> selector)
+        {
+            if (source.IsNullOrEmpty())
+                return Array.Empty<TTarget>();
+
+            return source.Select(selector);
+        }
     }
 }

@@ -1,8 +1,4 @@
 ﻿using Common.Basic.Maths;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Common.Basic.Threading
 {
@@ -33,6 +29,10 @@ namespace Common.Basic.Threading
                 ct.ThrowIfCancellationRequested();
         }
 
+        public static async Task<T[]> Values<T>(this IEnumerable<Task<T>> tasks, bool configureAwait = false)
+        {
+            return await Task.WhenAll(tasks.ToArray()).ConfigureAwait(configureAwait);
+        }
     }
 
     public static class ThreadEx
