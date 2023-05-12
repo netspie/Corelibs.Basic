@@ -3,6 +3,7 @@ using Common.Basic.DDD;
 using Common.Basic.Files;
 using Common.Basic.Json;
 using Common.Basic.Threading;
+using Common.Basic.UMVC;
 
 namespace Common.Basic.Repository
 {
@@ -24,6 +25,15 @@ namespace Common.Basic.Repository
             _directoryOperations = directoryOperations;
             _fileOperations = fileOperations;
             _jsonConverter = jsonConverter;
+        }
+
+        public LocalStorageRepository(
+            string pathToDirectory)
+        {
+            _pathToDirectory = pathToDirectory;
+            _directoryOperations = new DirectoryOperations();
+            _fileOperations = new FileOperations();
+            _jsonConverter = new NewtonsoftJsonConverter();
         }
 
         public Task<Result<TEntity>> GetBy(string id)

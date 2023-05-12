@@ -18,6 +18,12 @@ namespace Common.Basic.Files
             _jsonConverter = jsonConverter;
         }
 
+        public LocalStorageFile(string pathToDirectory)
+        {
+            _pathToDirectory = pathToDirectory;
+            _jsonConverter = new NewtonsoftJsonConverter();
+        }
+
         public Task<Result<TObject>> Get()
         {
             if (!Directory.Exists(_pathToDirectory))

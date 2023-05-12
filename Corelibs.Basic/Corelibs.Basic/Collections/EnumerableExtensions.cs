@@ -168,6 +168,15 @@ namespace Common.Basic.Collections
             return source.Aggregate(aggregator);
         }
 
+        public static IEnumerable<TResult> SelectOrDefault<TSource, TResult>(
+            this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        {
+            if (source.IsNullOrEmpty())
+                return default;
+
+            return source.Select(selector);
+        }
+
         public static void SetToNull<T1, T2>(ref T1 v1, ref T2 v2)
             where T1 : class
             where T2 : class
