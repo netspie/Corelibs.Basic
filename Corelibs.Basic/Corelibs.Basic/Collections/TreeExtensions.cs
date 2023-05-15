@@ -13,12 +13,13 @@ public static class TreeExtensions
         if (node == default || property == default)
             return default;
 
-        if (getProperty(node) == property)
-            return node;
-
-        foreach (var child in getChildren(node))
-            if (getProperty(child) == property) 
+        var children = getChildren(node);
+        foreach (var child in children)
+        {
+            var childProperty = getProperty(child);
+            if (childProperty.Equals(property))
                 return child;
+        }
 
         return default;
     }

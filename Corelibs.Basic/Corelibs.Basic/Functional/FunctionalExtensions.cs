@@ -106,12 +106,26 @@ namespace Common.Basic.Functional
             return value;
         }
 
+        public static IEnumerable<T> ThenIfNotEmpty<T>(this IEnumerable<T> source, Action<IEnumerable<T>> action)
+        {
+            if (!source.IsNullOrEmpty())
+                action(source);
+
+            return source;
+        }
+
         public static T Then<T>(this T value, Action<T> action)
         {
             if (value != null)
                 action(value);
 
             return value;
+        }
+
+        public static void ThenEnd<T>(this T value, Action<T> action)
+        {
+            if (value != null)
+                action(value);
         }
 
         public static T Then<T>(this Action action1, Func<T> action2)

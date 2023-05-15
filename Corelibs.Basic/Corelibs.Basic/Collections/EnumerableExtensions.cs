@@ -21,6 +21,15 @@ namespace Common.Basic.Collections
                 action(i);
         }
 
+        public static void ForEachEnd<T>(this IEnumerable<T> enumerable, Action<T> itemAction)
+        {
+            foreach (var item in enumerable)
+            {
+                if (item != null)
+                    itemAction(item);
+            }
+        }
+
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> itemAction)
         {
             foreach (var item in enumerable)
@@ -168,6 +177,22 @@ namespace Common.Basic.Collections
             return source.Aggregate(aggregator);
         }
 
+        public static T AggregateOrEmpty<T>(this IEnumerable<T> source, Func<T, T, T> aggregator, T empty)
+        {
+            if (source.IsNullOrEmpty())
+                return empty;
+
+            return source.AggregateOrDefault(aggregator);
+        }
+
+        public static IEnumerable<T> AppendIfNotEmpty<T>(this IEnumerable<T> source, T item)
+        {
+            if (source.IsNullOrEmpty())
+                return source;
+
+            return source.Append(item);
+        }
+
         public static IEnumerable<TResult> SelectOrDefault<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
@@ -214,14 +239,6 @@ namespace Common.Basic.Collections
                     yield return new Tuple<T1, IEnumerable<T2>>(item1, items);
                 }
             }
-        }
-
-        public static IEnumerable<TTarget> SelectOrDefault<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> selector)
-        {
-            if (source.IsNullOrEmpty())
-                return Array.Empty<TTarget>();
-
-            return source.Select(selector);
         }
     }
 }
