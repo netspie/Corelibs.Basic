@@ -1,6 +1,6 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.Collections;
-using Common.Basic.Repository;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.Collections;
+using Corelibs.Basic.Repository;
 using System.Net.Http.Json;
 
 namespace BuildingBlocks.Repository;

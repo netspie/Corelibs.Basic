@@ -1,10 +1,10 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.Json;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.Json;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Files
+namespace Corelibs.Basic.Files
 {
     public class LocalStorageFile<TObject> : IFile<TObject>
         where TObject : class

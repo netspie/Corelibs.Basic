@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace Common.Basic.Reflection
+namespace Corelibs.Basic.Reflection
 {
     public static class AssemblyExtensionsEx
     {

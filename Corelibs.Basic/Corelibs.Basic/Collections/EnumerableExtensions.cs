@@ -1,9 +1,9 @@
-﻿using Common.Basic.Functional;
+﻿using Corelibs.Basic.Functional;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Basic.Collections
+namespace Corelibs.Basic.Collections
 {
     public static class EnumerableExtensions
     {

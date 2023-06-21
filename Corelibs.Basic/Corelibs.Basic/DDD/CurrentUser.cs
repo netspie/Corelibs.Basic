@@ -1,4 +1,4 @@
-﻿namespace Corelibs.Basic.Architecture.DDD
+﻿namespace Corelibs.Basic.DDD
 {
     public class CurrentUser
     {

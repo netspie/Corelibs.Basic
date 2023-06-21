@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Common.Basic.Json
+namespace Corelibs.Basic.Json
 {
     public class NewtonsoftJsonConverter : IJsonConverter
     {

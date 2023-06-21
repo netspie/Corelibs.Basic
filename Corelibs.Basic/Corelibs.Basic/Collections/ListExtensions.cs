@@ -1,8 +1,8 @@
-﻿using Common.Basic.Maths;
+﻿using Corelibs.Basic.Maths;
 using System;
 using System.Collections.Generic;
 
-namespace Common.Basic.Collections
+namespace Corelibs.Basic.Collections
 {
     public static class ListExtensions
     {

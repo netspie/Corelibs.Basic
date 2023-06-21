@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.DDD
+﻿namespace Corelibs.Basic.DDD
 {
     public interface IEntity
     {

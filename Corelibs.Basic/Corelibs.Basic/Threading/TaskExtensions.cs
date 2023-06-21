@@ -1,6 +1,6 @@
-﻿using Common.Basic.Maths;
+﻿using Corelibs.Basic.Maths;
 
-namespace Common.Basic.Threading
+namespace Corelibs.Basic.Threading
 {
     public static class TaskExtensions
     {

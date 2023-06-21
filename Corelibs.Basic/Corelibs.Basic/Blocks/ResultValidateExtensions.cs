@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Blocks
+﻿namespace Corelibs.Basic.Blocks
 {
     public static class ResultValidateExtensions
     {

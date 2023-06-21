@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Json
+﻿namespace Corelibs.Basic.Json
 {
     public interface IJsonConverter
     {

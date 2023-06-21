@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Common.Basic.Files
+namespace Corelibs.Basic.Files
 {
     public class DirectoryOperations : IDirectoryOperations
     {

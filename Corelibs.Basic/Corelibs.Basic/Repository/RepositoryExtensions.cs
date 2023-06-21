@@ -1,12 +1,12 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.DDD;
-using Common.Basic.Threading;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.DDD;
+using Corelibs.Basic.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Repository
+namespace Corelibs.Basic.Repository
 {
     public static class RepositoryExtensions
     {

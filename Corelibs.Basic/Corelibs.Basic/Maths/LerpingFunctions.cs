@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Common.Basic.Maths
+namespace Corelibs.Basic.Maths
 {
     public class LerpingFunctions
     {

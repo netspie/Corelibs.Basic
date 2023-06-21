@@ -1,7 +1,7 @@
-﻿using Common.Basic.Blocks;
+﻿using Corelibs.Basic.Blocks;
 using System;
 
-namespace Common.Basic.Repository
+namespace Corelibs.Basic.Repository
 {
     public interface IRepositoryNoTask<T>
     {

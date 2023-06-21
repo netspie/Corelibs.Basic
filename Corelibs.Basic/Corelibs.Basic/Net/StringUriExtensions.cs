@@ -1,4 +1,4 @@
-﻿using Common.Basic.Collections;
+﻿using Corelibs.Basic.Collections;
 using Corelibs.Basic.Reflection;
 
 namespace Corelibs.Basic.Net

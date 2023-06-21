@@ -1,8 +1,8 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.Collections;
-using Common.Basic.DDD;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.Collections;
+using Corelibs.Basic.DDD;
 
-namespace Common.Basic.Repository;
+namespace Corelibs.Basic.Repository;
 
 public class CachedInMemoryRepositoryDecorator<TEntity> : IRepository<TEntity>
     where TEntity : class, IEntity

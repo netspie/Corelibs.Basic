@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Repository
+﻿namespace Corelibs.Basic.Repository
 {
     public interface IAccessor<out T>
     {

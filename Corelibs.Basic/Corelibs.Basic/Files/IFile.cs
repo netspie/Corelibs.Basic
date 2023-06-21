@@ -1,7 +1,7 @@
-﻿using Common.Basic.Blocks;
+﻿using Corelibs.Basic.Blocks;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Files
+namespace Corelibs.Basic.Files
 {
     public interface IFile<T>
         where T : class

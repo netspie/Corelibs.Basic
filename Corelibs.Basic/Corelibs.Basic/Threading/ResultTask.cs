@@ -1,8 +1,8 @@
-﻿using Common.Basic.Blocks;
+﻿using Corelibs.Basic.Blocks;
 using System;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Threading
+namespace Corelibs.Basic.Threading
 {
     public static class ResultTask
     {

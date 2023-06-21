@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Basic.Functional
+namespace Corelibs.Basic.Functional
 {
     public interface IResult<TValue, TError>
     {

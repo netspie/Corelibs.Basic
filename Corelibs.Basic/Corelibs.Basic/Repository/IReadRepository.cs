@@ -1,6 +1,6 @@
-﻿using Common.Basic.Blocks;
+﻿using Corelibs.Basic.Blocks;
 
-namespace Common.Basic.Repository
+namespace Corelibs.Basic.Repository
 {
     public interface IReadRepository
     {

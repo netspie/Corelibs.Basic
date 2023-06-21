@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Files
+﻿namespace Corelibs.Basic.Files
 {
     public interface IFileOperations
     {

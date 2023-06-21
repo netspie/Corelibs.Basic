@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Common.Basic.Collections
+namespace Corelibs.Basic.Collections
 {
     public static class ConcurrentStackExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Basic.Collections
+namespace Corelibs.Basic.Collections
 {
     public static class StringExtensions
     {

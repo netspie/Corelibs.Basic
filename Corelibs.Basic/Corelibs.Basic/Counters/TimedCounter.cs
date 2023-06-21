@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Common.Basic.Counters
+namespace Corelibs.Basic.Counters
 {
     public class TimedCounter
     {

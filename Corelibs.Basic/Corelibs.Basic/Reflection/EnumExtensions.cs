@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Common.Basic.Reflection
+namespace Corelibs.Basic.Reflection
 {
     public static class EnumExtensions
     {

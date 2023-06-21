@@ -1,6 +1,6 @@
-﻿using Common.Basic.Collections;
+﻿using Corelibs.Basic.Collections;
 
-namespace Common.Basic.DDD
+namespace Corelibs.Basic.DDD
 {
     public abstract class Entity : IEntity
     {

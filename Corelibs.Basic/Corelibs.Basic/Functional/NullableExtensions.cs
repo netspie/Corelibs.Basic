@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Functional
+﻿namespace Corelibs.Basic.Functional
 {
     public static class NullableExtensions
     {

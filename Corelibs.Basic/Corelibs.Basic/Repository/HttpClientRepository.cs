@@ -1,8 +1,8 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.DDD;
-using Common.Basic.Json;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.DDD;
+using Corelibs.Basic.Json;
 
-namespace Common.Basic.Repository
+namespace Corelibs.Basic.Repository
 {
     public class HttpClientRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity

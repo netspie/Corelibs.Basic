@@ -1,11 +1,10 @@
-﻿using Common.Basic.Blocks;
-using Common.Basic.DDD;
-using Common.Basic.Files;
-using Common.Basic.Json;
-using Common.Basic.Threading;
-using Common.Basic.UMVC;
+﻿using Corelibs.Basic.Blocks;
+using Corelibs.Basic.DDD;
+using Corelibs.Basic.Files;
+using Corelibs.Basic.Json;
+using Corelibs.Basic.Threading;
 
-namespace Common.Basic.Repository
+namespace Corelibs.Basic.Repository
 {
     public class LocalStorageRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity

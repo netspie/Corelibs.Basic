@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace Common.Basic.Common.Basic.Net
+namespace Corelibs.Basic.Corelibs.Basic.Net
 {
     public class NetSocketExtensions
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Basic.Functional
+namespace Corelibs.Basic.Functional
 {
     public class WhenAll
     {

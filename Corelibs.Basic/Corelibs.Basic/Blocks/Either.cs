@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Blocks
+namespace Corelibs.Basic.Blocks
 {
     /// <summary>
     /// Functional data data to represent a discriminated

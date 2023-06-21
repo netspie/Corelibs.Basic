@@ -1,6 +1,6 @@
-﻿using Common.Basic.Collections;
+﻿using Corelibs.Basic.Collections;
 
-namespace Common.Basic.Functional
+namespace Corelibs.Basic.Functional
 {
     public static class ConditionalAction
     {

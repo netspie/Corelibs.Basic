@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Common.Basic.Blocks
+namespace Corelibs.Basic.Blocks
 {
     public static class ResultConvertExtensions
     {

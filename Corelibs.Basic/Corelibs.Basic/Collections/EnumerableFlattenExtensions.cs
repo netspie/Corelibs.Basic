@@ -1,4 +1,4 @@
-﻿namespace Common.Basic.Collections
+﻿namespace Corelibs.Basic.Collections
 {
     public static class EnumerableFlattenExtensions
     {

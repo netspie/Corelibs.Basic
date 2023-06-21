@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Basic.Collections
+namespace Corelibs.Basic.Collections
 {
     public static class DictionaryExtensions
     {

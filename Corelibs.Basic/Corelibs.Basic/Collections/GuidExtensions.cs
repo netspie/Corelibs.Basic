@@ -1,4 +1,4 @@
-﻿using Common.Basic.Collections;
+﻿using Corelibs.Basic.Collections;
 
 namespace Corelibs.Basic.Collections
 {
