@@ -2,8 +2,8 @@
 
 namespace Corelibs.Basic.Repository
 {
-    public interface IReadRepository
+    public interface IReadRepository<TEntityId>
     {
-        Task GetBy(string id, Result result);
+        Task GetBy(TEntityId id, Result result);
     }
 }

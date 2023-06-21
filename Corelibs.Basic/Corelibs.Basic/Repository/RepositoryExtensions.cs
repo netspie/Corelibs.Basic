@@ -1,28 +1,23 @@
 ﻿using Corelibs.Basic.Blocks;
-using Corelibs.Basic.DDD;
 using Corelibs.Basic.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Corelibs.Basic.Repository
 {
     public static class RepositoryExtensions
     {
-        public static async Task<T> GetEntity<T>(this IRepository<T> repository, string id)
+        public static async Task<T> GetEntity<T, TId>(this IRepository<T, TId> repository, TId id)
         {
             var res = await repository.GetBy(id);
             return res.Get<T>();
         }
 
-        public static async Task<bool> SaveEntity<T>(this IRepository<T> repository, T item)
+        public static async Task<bool> SaveEntity<T, TId>(this IRepository<T, TId> repository, T item)
         {
             var res = await repository.Save(item);
             return res.IsSuccess;
         }
 
-        public static async Task<Result> GetRunAndSaveEntity<T>(this IRepository<T> repository, string id, Func<T, bool> operation)
+        public static async Task<Result> GetRunAndSaveEntity<T, TId>(this IRepository<T, TId> repository, TId id, Func<T, bool> operation)
         {
             var entity = await repository.GetEntity(id);
             if (!operation(entity))
@@ -31,8 +26,8 @@ namespace Corelibs.Basic.Repository
             return repository.Save(entity);
         }
 
-        public static async Task<Result<T>> CreateNewAndSaveEntityIfNotExistsOfName<T>(
-            this IRepository<T> repository, string name, Func<T, string> getName)
+        public static async Task<Result<T>> CreateNewAndSaveEntityIfNotExistsOfName<T, TId>(
+            this IRepository<T, TId> repository, string name, Func<T, string> getName)
         {
             var result = new Result<T>();
 
@@ -54,7 +49,7 @@ namespace Corelibs.Basic.Repository
             return result.With(entity);
         }
 
-        public static async Task<Result<T>> GetIfExistsOrCreate<T>(this IRepository<T> repository, string id, Func<T> createEntity)
+        public static async Task<Result<T>> GetIfExistsOrCreate<T, TId>(this IRepository<T, TId> repository, TId id, Func<T> createEntity)
         {
             var result = await repository.GetBy(id);
             if (!result.IsSuccess)
@@ -67,7 +62,7 @@ namespace Corelibs.Basic.Repository
             return createEntity().ToResult();
         }
 
-        public static async Task<Result<T>> GetIfExistsOrCreateAndSave<T>(this IRepository<T> repository, string id, Func<T> createEntity)
+        public static async Task<Result<T>> GetIfExistsOrCreateAndSave<T, TId>(this IRepository<T, TId> repository, TId id, Func<T> createEntity)
         {
             var result = await repository.GetBy(id);
             if (!result.IsSuccess)
@@ -85,8 +80,8 @@ namespace Corelibs.Basic.Repository
             return result.With(entity);
         }
 
-        public static async Task<Result<string>> GetRunAndSaveEntity_ThenCreateNew<T>(
-            this IRepository<T> repository, string id, Func<T, string, bool> operation, Func<string, T> create)
+        public static async Task<Result<string>> GetRunAndSaveEntity_ThenCreateNew<T, TId>(
+            this IRepository<T, TId> repository, TId id, Func<T, string, bool> operation, Func<string, T> create)
         {
             var entity = await repository.GetEntity(id);
 
@@ -110,37 +105,37 @@ namespace Corelibs.Basic.Repository
         }
 
 
-        public static Task<T> Get<T>(this IRepository<T> repository, string id, Result result) =>
+        public static Task<T> Get<T, TId>(this IRepository<T, TId> repository, TId id, Result result) =>
             repository.GetBy(id).Set(result);
 
-        public static Task<T[]> Get<T>(this IRepository<T> repository, IList<string> ids, Result result) =>
+        public static Task<T[]> Get<T, TId>(this IRepository<T, TId> repository, IList<TId> ids, Result result) =>
             repository.GetBy(ids).Set(result);
 
-        public static Task<T[]> GetAll<T>(this IRepository<T> repository, Result result) =>
+        public static Task<T[]> GetAll<T, TId>(this IRepository<T, TId> repository, Result result) =>
             repository.GetAll().Set(result);
 
-        public static Task Save<T>(this IRepository<T> repository, T entity, Result result) =>
+        public static Task Save<T, TId>(this IRepository<T, TId> repository, T entity, Result result) =>
             repository.Save(entity).AddTo(result);
 
-        public static async Task<T> GetIfExistsOrCreate<T>(this IRepository<T> repository, string id, Func<T> createEntity, Result result)
+        public static async Task<T> GetIfExistsOrCreate<T, TId>(this IRepository<T, TId> repository, TId id, Func<T> createEntity, Result result)
         {
             var getResult = await repository.GetIfExistsOrCreate(id, createEntity).AddTo(result);
             return getResult.Get();
         }
 
-        public static async Task<T> GetIfExistsOrCreateAndSave<T>(this IRepository<T> repository, string id, Func<T> createEntity, Result result)
+        public static async Task<T> GetIfExistsOrCreateAndSave<T, TId>(this IRepository<T, TId> repository, TId id, Func<T> createEntity, Result result)
         {
             var getResult = await repository.GetIfExistsOrCreateAndSave(id, createEntity).AddTo(result);
             return getResult.Get();
         }
 
-        public static async Task<Result> Save<T>(this IRepository<T> repository, params T[] entities)
+        public static async Task<Result> Save<T, TId>(this IRepository<T, TId> repository, params T[] entities)
         {
             var results = await Task.WhenAll(entities.Select(e => repository.Save(e)));
             return new Result(results);
         }
 
-        public static async Task<Result> SaveOrBreakIfFail<T>(this IRepository<T> repository, params T[] entities)
+        public static async Task<Result> SaveOrBreakIfFail<T, TId>(this IRepository<T, TId> repository, params T[] entities)
         {
             var results = new List<Result>();
             foreach (var entity in entities)

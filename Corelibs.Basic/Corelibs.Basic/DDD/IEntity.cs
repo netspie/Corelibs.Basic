@@ -1,8 +1,8 @@
 ﻿namespace Corelibs.Basic.DDD
 {
-    public interface IEntity
+    public interface IEntity<TId>
     {
-        string ID { get; }
+        TId Id { get; }
         uint Version { get; set; }
     }
 }

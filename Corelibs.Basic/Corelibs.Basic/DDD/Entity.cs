@@ -2,25 +2,29 @@
 
 namespace Corelibs.Basic.DDD
 {
-    public abstract class Entity : IEntity
+    public abstract class Entity<TId> : IEntity<TId>
+        where TId : EntityId
     {
-        public Entity() { }
+        public TId Id { get; }
 
-        public Entity(string id)
+        public uint Version { get; private set; }
+
+        public Entity() => Id = EntityId.New<TId>();
+        public Entity(TId id) => Id = id;
+
+        public Entity(TId id, uint version)
         {
-            ID = id;
+            Id = id;
+            Version = version;
         }
 
-        public string ID { get; init; } = new("");
+        uint IEntity<TId>.Version { get => Version; set { Version = value; } }
 
-        public uint Version { get;  set; }
-        uint IEntity.Version { get => Version; set { Version = value; } }
-
-        public static implicit operator bool(Entity entity) => entity != null;
+        public static implicit operator bool(Entity<TId> entity) => entity != null;
 
         public override string ToString()
         {
-            var result = ID;
+            var result = Id.ToString();
 
             var type = GetType();
             var nameProperty = type.GetProperty("Name");
@@ -28,7 +32,7 @@ namespace Corelibs.Basic.DDD
             {
                 var name = nameProperty.GetValue(this) as string;
                 if (!name.IsNullOrEmpty())
-                    result = $"{name} - {ID}";
+                    result = $"{name} - {Id.ToString()}";
             }
 
             return result;
