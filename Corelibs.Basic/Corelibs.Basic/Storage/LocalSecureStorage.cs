@@ -3,12 +3,12 @@ using System.Text;
 
 namespace Corelibs.Basic.Storage;
 
-public class SecureStorage : ISecureStorage
+public class LocalSecureStorage : ISecureStorage
 {
     private readonly byte[] entropy = new byte[] { 1, 2, 3, 4, 5 }; // Change this to a unique byte array.
     private readonly string _appName;
 
-    public SecureStorage(string appName)
+    public LocalSecureStorage(string appName)
     {
         _appName = appName;
     }

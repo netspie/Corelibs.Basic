@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 	<Platforms>AnyCPU;x64</Platforms>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<Version>1.0.8</Version>
+	<Version>1.0.9</Version>
 	<Title>Corelibs.Basic</Title>
 	<RepositoryUrl>https://github.com/drlsn/Corelibs.Basic</RepositoryUrl>
   </PropertyGroup>
