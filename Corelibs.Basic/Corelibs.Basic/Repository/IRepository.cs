@@ -16,7 +16,7 @@ namespace Corelibs.Basic.Repository
         Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct);
         Task<Result> Save(TEntity item);
         Task<Result> Clear();
-        Task<Result> Delete(string id);
+        Task<Result> Delete(TEntityId id);
 
         Task<Result<bool>> ExistsOfName(string name, Func<TEntity, string> getName);
     }
