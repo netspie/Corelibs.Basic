@@ -2,11 +2,11 @@
 {
     public class CurrentUser
     {
-        public string ID { get; }
+        public string Id { get; }
 
         public CurrentUser(string id)
         {
-            ID = id;
+            Id = id;
         }
     }
 }
