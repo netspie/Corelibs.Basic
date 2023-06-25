@@ -171,6 +171,12 @@ namespace Corelibs.Basic.Blocks
             return this;
         }
 
+        public Result Fail(string errorMessage)
+        {
+            Add(Failure(errorMessage));
+            return this;
+        }
+
         public void Add(Result result)
         {
             _subResults.Add(result);
