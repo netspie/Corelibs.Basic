@@ -197,7 +197,7 @@ namespace Corelibs.Basic.Collections
             this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             if (source.IsNullOrEmpty())
-                return default;
+                return Enumerable.Empty<TResult>();
 
             return source.Select(selector);
         }
