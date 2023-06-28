@@ -13,5 +13,19 @@ namespace Corelibs.Basic.Reflection
 
             return assignableFromTTypes;
         }
+
+        public static Type[] GetCurrentDomainTypesImplementing<T>(Assembly assembly = null)
+        {
+            var assemblies = assembly is null ? AppDomain.CurrentDomain.GetAssemblies() : new[] { assembly };
+
+            var type = typeof(T);
+            var types = assemblies
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p))
+                .Where(p => !p.IsAbstract && !p.IsInterface)
+                .ToArray();
+
+            return types;
+        }
     }
 }
