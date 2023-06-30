@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Corelibs.Basic.Collections;
+using Newtonsoft.Json.Linq;
 
 namespace Corelibs.Basic.Blocks
 {
@@ -220,6 +221,12 @@ namespace Corelibs.Basic.Blocks
         public Result WithError(string message)
         {
             AddError(message);
+            return this;
+        }
+
+        public Result WithErrors(IEnumerable<string> messages)
+        {
+            messages.ForEach(AddError);
             return this;
         }
 
