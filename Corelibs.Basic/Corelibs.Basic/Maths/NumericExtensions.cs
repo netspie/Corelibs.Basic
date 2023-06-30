@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Corelibs.Basic.Maths
+﻿namespace Corelibs.Basic.Maths
 {
     public static class NumericExtensions
     {
@@ -16,6 +12,7 @@ namespace Corelibs.Basic.Maths
 
             return val;
         }
+        public static T Clamp<T>(this T val, T max) where T : IComparable<T> => val.Clamp(default, max);
 
         public static void IncreaseBy<T>(this ref T value, T byValue, T lowerLimit, T upperLimit, bool loop = true) where T : struct
         {

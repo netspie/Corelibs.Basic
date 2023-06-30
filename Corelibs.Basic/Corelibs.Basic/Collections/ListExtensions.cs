@@ -27,7 +27,7 @@ namespace Corelibs.Basic.Collections
 
         public static void InsertClamped<T>(this List<T> list, T item, int index)
         {
-            index = index.Clamp(0, list.Count);
+            index = index.Clamp(list.Count);
             list.Insert(index, item);
         }
 
