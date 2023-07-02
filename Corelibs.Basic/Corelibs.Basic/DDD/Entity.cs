@@ -22,6 +22,16 @@ namespace Corelibs.Basic.DDD
 
         public static implicit operator bool(Entity<TId> entity) => entity != null;
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is Entity<TId> entity) 
+                return Id == entity.Id;
+                
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode() => Id.GetHashCode();
+
         public override string ToString()
         {
             var result = Id.ToString();

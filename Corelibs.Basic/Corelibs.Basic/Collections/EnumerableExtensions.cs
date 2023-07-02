@@ -241,5 +241,8 @@ namespace Corelibs.Basic.Collections
                 }
             }
         }
+
+        public static IEnumerable<TResult> Concat<TResult>(params IEnumerable<object>[] other) =>
+            other.AggregateOrDefault((x, y) => x.Concat(y)).Cast<TResult>();
     }
 }
