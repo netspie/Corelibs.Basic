@@ -122,6 +122,14 @@ namespace Corelibs.Basic.Functional
             return value;
         }
 
+        public static TResult ThenSelect<TSource, TResult>(this TSource value, Func<TSource, TResult> func)
+        {
+            if (value != null)
+                return func(value);
+
+            return default;
+        }
+
         public static void ThenEnd<T>(this T value, Action<T> action)
         {
             if (value != null)
