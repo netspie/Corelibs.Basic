@@ -247,5 +247,8 @@ namespace Corelibs.Basic.Collections
 
         public static bool Contains<T>(this IEnumerable<T> source, Func<T, bool> selector) =>
             source.FirstOrDefault(e => selector(e)) != null;
+
+        public static bool Contains<T>(this IEnumerable<object> source) =>
+            source.OfType<T>().Any();
     }
 }
