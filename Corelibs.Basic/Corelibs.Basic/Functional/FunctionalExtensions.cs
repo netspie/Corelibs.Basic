@@ -2,7 +2,7 @@
 
 namespace Corelibs.Basic.Functional
 {
-    public static class DFuncExt
+    public static class Ex
     {
         public static Action<T> And<T>(this Action<T> action, params Action<T>[] otherActions)
         {
@@ -216,6 +216,15 @@ namespace Corelibs.Basic.Functional
                 if (task != null)
                     await task;
             }
+        }
+
+        public static T SetToNullAndReturn<T>(ref T @object)
+        {
+            var toReturn = @object;
+
+            @object = default;
+
+            return toReturn;
         }
     }
 }

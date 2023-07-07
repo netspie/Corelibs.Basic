@@ -48,8 +48,8 @@ public class RemoveOnlyList<T> : IRemoveOnlyList<T>
             return false;
 
         _source.Swap(index, Count - 1);
-        --Count;
         _source[Count - 1] = default;
+        --Count;
 
         return true;
     }

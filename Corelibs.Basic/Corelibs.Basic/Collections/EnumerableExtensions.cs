@@ -212,6 +212,7 @@ namespace Corelibs.Basic.Collections
 
         public static T[] SingleToArray<T>(this T @object) => new T[] { @object };
         public static List<T> CastToList<T>(this System.Collections.IEnumerable source) => source.Cast<T>().ToList();
+        public static List<T> OfTypeToList<T>(this System.Collections.IEnumerable source) => source.OfType<T>().ToList();
 
         public static IEnumerable<Tuple<T1, IEnumerable<T2>>> Zip<T1, T2>(
             this IEnumerable<T1> src1,

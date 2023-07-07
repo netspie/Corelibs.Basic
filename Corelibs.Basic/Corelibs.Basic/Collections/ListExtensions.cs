@@ -81,5 +81,12 @@ namespace Corelibs.Basic.Collections
             list.Add(item);
             return item;
         }
+
+        public static void AddIfNotEmpty<T>(this IList<T> list, T item) 
+            where T : IEnumerable<object>
+        {
+            if (item.Count() > 0)
+                list.Add(item);
+        }
     }
 }
