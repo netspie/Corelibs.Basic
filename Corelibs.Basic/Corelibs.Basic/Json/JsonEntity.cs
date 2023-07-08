@@ -3,6 +3,7 @@
 namespace Corelibs.Basic.Json
 {
     public class JsonEntity<TEntityId> : IEntity<TEntityId>
+        where TEntityId : EntityId
     {
         public JsonEntity() {}
 

@@ -8,6 +8,7 @@ namespace Corelibs.Basic.Json
     public class JsonEntityRepositoryDecorator<TEntity, TEntityId, TDataEntity> : IRepository<TEntity, TEntityId>, IReadRepository<TEntityId>
         where TEntity : class, IEntity<TEntityId>
         where TDataEntity : JsonEntity<TEntityId>, new()
+        where TEntityId : EntityId
     {
         private readonly IJsonConverter _jsonConverter;
         private readonly IRepository<TDataEntity, TEntityId> _jsonTableRepository;
