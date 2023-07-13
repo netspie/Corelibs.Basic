@@ -4,6 +4,8 @@ namespace Corelibs.Basic.Functional
 {
     public static class Ex
     {
+        public static T Do<T>(Func<T> func) => func();
+
         public static Action<T> And<T>(this Action<T> action, params Action<T>[] otherActions)
         {
             return param =>

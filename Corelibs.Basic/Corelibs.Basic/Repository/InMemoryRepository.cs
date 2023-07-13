@@ -1,6 +1,7 @@
 ﻿using Corelibs.Basic.Blocks;
 using Corelibs.Basic.DDD;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Corelibs.Basic.Repository;
 
@@ -8,7 +9,7 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
     where TEntity : IEntity<TEntityId>
     where TEntityId : EntityId
 {
-    private readonly ConcurrentDictionary<string, TEntity> _entities = new();
+    private readonly ConcurrentDictionary<string, EntityData> _entities = new();
 
     public Task<Result> Clear()
     {
@@ -29,25 +30,25 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
 
     public Task<Result<TEntity[]>> GetAll()
     {
-        return Task.FromResult(new Result<TEntity[]>(_entities.Values.ToArray()));
+        return Task.FromResult(new Result<TEntity[]>(_entities.Values.Select(d => d.Entity).ToArray()));
     }
 
     public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)
     {
-        return Task.FromResult(new Result<TEntity[]>(_entities.Values.ToArray()));
+        return Task.FromResult(new Result<TEntity[]>(_entities.Values.Select(d => d.Entity).ToArray()));
     }
 
     public Task<Result<TEntity>> GetBy(TEntityId id)
     {
-        if (!_entities.TryGetValue(id.Value, out var entity))
+        if (!_entities.TryGetValue(id.Value, out var data))
             return Result<TEntity>.FailureTask();
 
-        return Task.FromResult(new Result<TEntity>(entity));
+        return Task.FromResult(new Result<TEntity>(data.Entity));
     }
 
     public Task<Result<TEntity[]>> GetBy(IList<TEntityId> ids)
     {
-        return Task.FromResult(new Result<TEntity[]>(ids.Select(id => _entities[id]).ToArray()));
+        return Task.FromResult(new Result<TEntity[]>(ids.Select(id => _entities[id].Entity).ToArray()));
     }
 
     public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
@@ -57,11 +58,35 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
 
     public Task<Result> Save(TEntity item)
     {
+        EntityData data;
         if (_entities.ContainsKey(item.Id))
-            _entities[item.Id] = item;
+            data = _entities[item.Id];
         else
-            _entities.TryAdd(item.Id, item);
+        {
+            data = new(item);
+            if (!_entities.TryAdd(item.Id, data))
+                return Result.FailureTask();
+        }
+
+        lock (data.Lock)
+        {
+            item.IncrementVersion(ref data.Lock);
+            data.Entity = item;
+        }
 
         return Result.SuccessTask();
+    }
+
+    private class EntityData
+    {
+
+        public TEntity Entity { get; set; }
+
+        public EntityData(TEntity entity)
+        {
+            Entity = entity;
+        }
+
+        public object Lock = new();
     }
 }
