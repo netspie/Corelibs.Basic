@@ -8,7 +8,7 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
     where TEntity : IEntity<TEntityId>
     where TEntityId : EntityId
 {
-    private readonly ConcurrentDictionary<TEntityId, TEntity> _entities = new();
+    private readonly ConcurrentDictionary<string, TEntity> _entities = new();
 
     public Task<Result> Clear()
     {
@@ -39,7 +39,10 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
 
     public Task<Result<TEntity>> GetBy(TEntityId id)
     {
-        return Task.FromResult(new Result<TEntity>(_entities[id]));
+        if (!_entities.TryGetValue(id.Value, out var entity))
+            return Result<TEntity>.FailureTask();
+
+        return Task.FromResult(new Result<TEntity>(entity));
     }
 
     public Task<Result<TEntity[]>> GetBy(IList<TEntityId> ids)
