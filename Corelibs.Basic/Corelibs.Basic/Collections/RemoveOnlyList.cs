@@ -5,13 +5,15 @@ namespace Corelibs.Basic.Collections;
 public interface IRemoveOnlyList<out T> : IEnumerable<T>
 {
     bool RemoveAt(int index);
+    T Take(Func<T, bool> selector);
+    T[] Take(int count);
     int Count { get; }
     T this[int index] { get; }
 }
 
 public class RemoveOnlyList<T> : IRemoveOnlyList<T>
 {
-    private readonly T[] _source;
+    private T[] _source;
 
     public int Count { get; private set; }
 
@@ -52,6 +54,26 @@ public class RemoveOnlyList<T> : IRemoveOnlyList<T>
         --Count;
 
         return true;
+    }
+
+    public T Take(Func<T, bool> selector)
+    {
+        var i = Array.FindIndex(_source, t => selector(t));
+        var item = _source[i];
+        if (!RemoveAt(i))
+            return default;
+
+        return item;
+    }
+
+    public T[] Take(int count)
+    {
+        var taken = _source.Take(count).ToArray();
+
+        _source = _source.Skip(count).Where(v => v is not null).ToArray();
+        Count = _source.Count();
+
+        return taken;
     }
 
     IEnumerator IEnumerable.GetEnumerator() => _source.Take(Count).GetEnumerator();
