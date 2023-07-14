@@ -19,7 +19,7 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
 
     public Task<Result> Delete(TEntityId id)
     {
-        _entities.TryRemove(id, out var value);
+        _entities.TryRemove(id.Value, out var value);
         return Result.SuccessTask();
     }
 
@@ -48,7 +48,7 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
 
     public Task<Result<TEntity[]>> GetBy(IList<TEntityId> ids)
     {
-        return Task.FromResult(new Result<TEntity[]>(ids.Select(id => _entities[id].Entity).ToArray()));
+        return Task.FromResult(new Result<TEntity[]>(ids.Select(id => _entities[id.Value].Entity).ToArray()));
     }
 
     public Task<Result<TEntity>> GetOfName(string name, Func<TEntity, string> getName)
@@ -59,12 +59,12 @@ public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEnti
     public Task<Result> Save(TEntity item)
     {
         EntityData data;
-        if (_entities.ContainsKey(item.Id))
-            data = _entities[item.Id];
+        if (_entities.ContainsKey(item.Id.Value))
+            data = _entities[item.Id.Value];
         else
         {
             data = new(item);
-            if (!_entities.TryAdd(item.Id, data))
+            if (!_entities.TryAdd(item.Id.Value, data))
                 return Result.FailureTask();
         }
 
