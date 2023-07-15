@@ -1,11 +1,10 @@
 ﻿using Corelibs.Basic.Blocks;
 using Corelibs.Basic.DDD;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Corelibs.Basic.Repository;
 
-public class InMemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
+public class MemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>, IMemoryRepository<TEntity, TEntityId>
     where TEntity : IEntity<TEntityId>
     where TEntityId : EntityId
 {

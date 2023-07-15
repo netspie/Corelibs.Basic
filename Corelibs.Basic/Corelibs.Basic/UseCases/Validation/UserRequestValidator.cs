@@ -7,6 +7,7 @@ namespace Corelibs.Basic.UseCases;
 
 public abstract class UserRequestValidator<TRequest> : AbstractValidator<TRequest>
 {
+    public UserRequestValidator() {}
     public UserRequestValidator(
         IAccessorAsync<ClaimsPrincipal> userAccessor)
     {
@@ -17,6 +18,9 @@ public abstract class UserRequestValidator<TRequest> : AbstractValidator<TReques
     private async Task<bool> ValidateUserAccessorAsync(
         IAccessorAsync<ClaimsPrincipal> userAccessor, CancellationToken cancellationToken)
     {
+        if (userAccessor is null)
+            return true;
+
         var guidString = await userAccessor.GetUserID();
         return Guid.TryParse(guidString, out _);
     }
