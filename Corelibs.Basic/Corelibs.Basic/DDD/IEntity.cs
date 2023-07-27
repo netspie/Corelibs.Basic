@@ -1,13 +1,15 @@
 ﻿using Mediator;
 
-namespace Corelibs.Basic.DDD
-{
-    public interface IEntity<TId>
-        where TId : EntityId
-    {
-        TId Id { get; }
-        uint Version { get; set; }
+namespace Corelibs.Basic.DDD;
 
-        List<INotification> DomainEvents { get; }
-    }
+public interface IEntity
+{
+    uint Version { get; set; }
+    List<INotification> DomainEvents { get; }
+}
+
+public interface IEntity<TId> : IEntity
+    where TId : EntityId
+{
+    TId Id { get; }
 }

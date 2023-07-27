@@ -1,4 +1,5 @@
 ﻿using Corelibs.Basic.Collections;
+using Corelibs.Basic.Repository;
 using Mediator;
 
 namespace Corelibs.Basic.DDD
@@ -13,6 +14,7 @@ namespace Corelibs.Basic.DDD
         public Entity() => Id = EntityId.New<TId>();
         public Entity(TId id) => Id = id;
 
+        [Ignore]
         public List<INotification> DomainEvents { get; private set; } = new();
 
         public Entity(TId id, uint version)
@@ -21,7 +23,7 @@ namespace Corelibs.Basic.DDD
             Version = version;
         }
 
-        uint IEntity<TId>.Version { get => Version; set { Version = value; } }
+        uint IEntity.Version { get => Version; set { Version = value; } }
 
         public static implicit operator bool(Entity<TId> entity) => entity != null;
 
