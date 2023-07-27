@@ -1,4 +1,6 @@
 ﻿using Corelibs.Basic.DDD;
+using Corelibs.Basic.Repository;
+using Mediator;
 
 namespace Corelibs.Basic.Json
 {
@@ -11,5 +13,8 @@ namespace Corelibs.Basic.Json
 
         public string Content { get; set; }
         public uint Version { get; set; }
+
+        [Ignore]
+        public List<INotification> DomainEvents => new();
     }
 }

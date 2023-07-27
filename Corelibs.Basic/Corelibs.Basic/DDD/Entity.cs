@@ -1,4 +1,5 @@
 ﻿using Corelibs.Basic.Collections;
+using Mediator;
 
 namespace Corelibs.Basic.DDD
 {
@@ -12,6 +13,8 @@ namespace Corelibs.Basic.DDD
         public Entity() => Id = EntityId.New<TId>();
         public Entity(TId id) => Id = id;
 
+        public List<INotification> DomainEvents { get; private set; } = new();
+
         public Entity(TId id, uint version)
         {
             Id = id;
@@ -21,6 +24,8 @@ namespace Corelibs.Basic.DDD
         uint IEntity<TId>.Version { get => Version; set { Version = value; } }
 
         public static implicit operator bool(Entity<TId> entity) => entity != null;
+
+        protected void Add(INotification @event) => DomainEvents.Add(@event);
 
         public override bool Equals(object? obj)
         {

@@ -23,5 +23,8 @@ namespace Corelibs.Basic.Collections
         {
             elements.ForEach(e => queue.Enqueue(e));
         }
+
+        public static Queue<T> ToQueue<T>(this IEnumerable<T> source) =>
+            new Queue<T>(source);
     }
 }
