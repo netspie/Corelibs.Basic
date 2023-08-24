@@ -29,5 +29,14 @@ namespace Corelibs.Basic.Auth
             var user = await claimsAccessor.Get();
             return (TId) Activator.CreateInstance(typeof(TId), user.GetUserID());
         }
+
+        public static bool IsAdmin(this ClaimsPrincipal claims)
+        {
+            var claim = claims.FindFirst("extension_Roles");
+            if (claim is null)
+                return false;
+
+            return claim.Value == "Admin";
+        }
     }
 }

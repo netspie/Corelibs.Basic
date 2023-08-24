@@ -7,7 +7,7 @@ namespace Corelibs.Basic.DDD
     public abstract class Entity<TId> : IEntity<TId>
         where TId : EntityId
     {
-        public TId Id { get; }
+        public TId Id { get; init; }
 
         public uint Version { get; private set; }
 
