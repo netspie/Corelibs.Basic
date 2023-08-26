@@ -211,6 +211,14 @@ namespace Corelibs.Basic.Collections
             return source.Select(selector);
         }
 
+        public static IEnumerable<TSource> InsertOrDefault<TSource>(this IEnumerable<TSource> source, int index, TSource item) =>
+            source is null ? 
+                Array.Empty<TSource>() : 
+                source
+                    .Take(index)
+                    .Append(item)
+                    .Concat(source.Skip(index));
+
         public static void SetToNull<T1, T2>(ref T1 v1, ref T2 v2)
             where T1 : class
             where T2 : class
