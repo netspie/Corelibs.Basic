@@ -31,6 +31,20 @@ namespace Corelibs.Basic.Collections
             list.Insert(index, item);
         }
 
+        public static void InsertForced<T>(this List<T> list, T item, int index)
+        {
+            list.AddRange(index + 1 - list.Count);
+            list[index] = item;
+        }
+
+        public static void AddRange<T>(this List<T> list, int count)
+        {
+            if (count <= 0)
+                return;
+
+            list.AddRange(new T[count]);
+        }
+
         public static T GetItemAfter<T>(this IList<T> list, T item) => list.GetItemNFrom(item, 1);
 
         public static T GetItemBefore<T>(this IList<T> list, T item) => list.GetItemNFrom(item, -1);
