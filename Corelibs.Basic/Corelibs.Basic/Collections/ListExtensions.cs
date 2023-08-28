@@ -102,5 +102,26 @@ namespace Corelibs.Basic.Collections
             if (item.Count() > 0)
                 list.Add(item);
         }
+
+        public static T Get<T>(
+            this IList<T> list, Func<T, bool> keySelector, 
+            int index,
+            out int foundAtIndex)
+        {
+            foundAtIndex = index;
+            if (list.IsNullOrEmpty())
+                return default;
+
+            if (list.IsIndexInRange(index))
+                return list[index];
+
+            T item = list.FirstOrDefault(keySelector);
+            if (item == null)
+                return default;
+
+            foundAtIndex = list.IndexOf(item);
+
+            return item;
+        }
     }
 }

@@ -269,6 +269,20 @@ namespace Corelibs.Basic.Collections
         public static bool Contains<T>(this IEnumerable<object> source) =>
             source.OfType<T>().Any();
 
+        public static T? FirstOrDefault<T>(this IEnumerable<T> source, Func<T, int, bool> selector)
+        {
+            int i = 0;
+            return source.FirstOrDefault(item =>
+            {
+                if (selector(item, i))
+                    return true;
+
+                i++;
+
+                return false;
+            });
+        }
+
         public static bool HasSameElements<T>(this IEnumerable<T> list1, IEnumerable<T> list2)
         {
             var cnt = new Dictionary<T, int>();
