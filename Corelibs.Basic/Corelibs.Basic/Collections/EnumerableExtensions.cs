@@ -206,6 +206,9 @@ namespace Corelibs.Basic.Collections
         public static T[] ToArrayOrDefault<T>(this IEnumerable<T> source) =>
             source is null ? Array.Empty<T>() : source.ToArray();
 
+        public static List<T> ToListOrDefault<T>(this IEnumerable<T> source) =>
+            source is null ? new() : source.ToList();
+
         public static IEnumerable<TResult> SelectOrDefault<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
