@@ -4,14 +4,14 @@ namespace Corelibs.Basic.Storage;
 
 public class LocalMediaStorage : IMediaStorage
 {
-    private readonly string _baseWritePath;
-    private readonly string _baseReadPath;
+    public string BaseWritePath { get; }
+    public string BaseReadPath { get; }
 
     public LocalMediaStorage(
         string baseWritePath, string baseReadPath)
     {
-        _baseWritePath = baseWritePath;
-        _baseReadPath = baseReadPath;
+        BaseWritePath = baseWritePath;
+        BaseReadPath = baseReadPath;
     }
 
     public Task<Result> Get(string name)
@@ -21,7 +21,7 @@ public class LocalMediaStorage : IMediaStorage
 
     public async Task<Result> Save(Stream stream, string name)
     {
-        string filePath = Path.Combine(_baseWritePath, name);
+        string filePath = Path.Combine(BaseWritePath, name);
 
         string directoryPath = Path.GetDirectoryName(filePath);
         if (!Directory.Exists(directoryPath))
@@ -31,6 +31,30 @@ public class LocalMediaStorage : IMediaStorage
         await stream.CopyToAsync(fs);
 
         return Result.Success();
+    }
+
+    public async Task<Result> Delete(string name)
+    {
+        string filePath = Path.Combine(BaseWritePath, name);
+
+        try
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                return Result.Success();
+            }
+            else
+            {
+                // If the file does not exist, you can return an appropriate error message.
+                return Result.Failure("File not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions that might occur during the deletion process.
+            return Result.Failure($"Failed to delete file: {ex.Message}");
+        }
     }
 }
 

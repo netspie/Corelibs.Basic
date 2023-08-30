@@ -1,5 +1,4 @@
 ﻿using Corelibs.Basic.Blocks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Corelibs.Basic.Storage;
 
@@ -7,6 +6,9 @@ public interface IMediaStorage
 {
     Task<Result> Get(string name);
     Task<Result> Save(Stream stream, string name);
+    Task<Result> Delete(string name);
+    string BaseWritePath { get; }
+    string BaseReadPath { get; }
 }
 
 public interface IMediaStorage<T> : IMediaStorage {}
