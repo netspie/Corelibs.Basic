@@ -234,7 +234,14 @@ namespace Corelibs.Basic.Collections
             v2 = null;
         }
 
-        public static T[] SingleToArray<T>(this T @object) => new T[] { @object };
+        public static T[] SingleToArray<T>(this T @object)
+        {
+            if (@object is null)
+                return Array.Empty<T>();
+
+            return new T[] { @object };
+        }
+
         public static List<T> CastToList<T>(this System.Collections.IEnumerable source) => source.Cast<T>().ToList();
         public static List<T> OfTypeToList<T>(this System.Collections.IEnumerable source) => source.OfType<T>().ToList();
 
