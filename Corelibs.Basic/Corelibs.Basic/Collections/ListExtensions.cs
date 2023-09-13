@@ -75,8 +75,10 @@ namespace Corelibs.Basic.Collections
             }
         }
 
-        public static void RemoveIf<T>(this IList<T> list, Func<T, bool> predicate)
+        public static bool RemoveIf<T>(this IList<T> list, Func<T, bool> predicate)
         {
+            bool removed = false;
+
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 var item = list[i];
@@ -84,7 +86,10 @@ namespace Corelibs.Basic.Collections
                     continue;
 
                 list.RemoveAt(i);
+                removed = true;
             }
+
+            return removed;
         }
 
         public static T AddTo<T>(this T item, IList<T> list)
