@@ -43,6 +43,9 @@ namespace Corelibs.Basic.Collections
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T, int> itemAction)
         {
+            if (enumerable is null)
+                return enumerable;
+
             int i = 0;
             foreach (var item in enumerable)
             {
