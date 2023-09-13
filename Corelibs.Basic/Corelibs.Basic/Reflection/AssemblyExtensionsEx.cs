@@ -27,5 +27,14 @@ namespace Corelibs.Basic.Reflection
 
             return types;
         }
+
+        public static Type[] GetTypesInFolder(this Assembly assembly, string folder)
+        {
+            string rootNamespace = assembly.GetName().Name + "." + folder.Replace("/", ".");
+
+            Type[] allTypes = assembly.GetTypes();
+
+            return allTypes.Where(type => type.Namespace != null && type.Namespace.StartsWith(rootNamespace)).ToArray();
+        }
     }
 }
