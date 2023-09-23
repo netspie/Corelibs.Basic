@@ -114,6 +114,11 @@ namespace Corelibs.Basic.Collections
             return enumerable.IsNullOrEmpty() || !enumerable.IsOneCount();
         }
 
+        public static bool IsNullOrEmptyOrOne<T>(this IEnumerable<T> enumerable)
+        {
+            return enumerable.IsNullOrEmpty() || enumerable.IsOneCount();
+        }
+
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random randomRange = null)
         {
             randomRange = randomRange ?? new Random();

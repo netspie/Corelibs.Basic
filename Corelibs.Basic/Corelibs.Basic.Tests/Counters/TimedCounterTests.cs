@@ -1,4 +1,4 @@
-using Common.Basic.Counters;
+using Corelibs.Basic.Counters;
 using NUnit.Framework;
 
 namespace Common.Basic.Tests
