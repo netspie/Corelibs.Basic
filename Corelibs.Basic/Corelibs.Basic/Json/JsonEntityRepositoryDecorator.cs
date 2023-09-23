@@ -25,6 +25,11 @@ namespace Corelibs.Basic.Json
             throw new NotImplementedException(); // to delete?
         }
 
+        public Task<Result> Create(IEnumerable<TEntity> items)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Result> Delete(TEntityId id)
         {
             return _jsonTableRepository.Delete(id);

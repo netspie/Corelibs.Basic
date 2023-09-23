@@ -76,4 +76,9 @@ public class MemoryRepositoryDecorator<TEntity, TEntityId> : IMemoryRepository<T
     {
         return _otherRepository.Save(item);
     }
+
+    public Task<Result> Create(IEnumerable<TEntity> items)
+    {
+        return _otherRepository.Create(items);
+    }
 }

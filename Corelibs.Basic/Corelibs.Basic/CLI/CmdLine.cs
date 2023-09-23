@@ -1,4 +1,6 @@
-﻿namespace Corelibs.Basic.CLI;
+﻿using System.Reflection;
+
+namespace Corelibs.Basic.CLI;
 
 public static class CmdLine
 {
@@ -21,5 +23,18 @@ public static class CmdLine
                 Console.WriteLine(@object);
 
         return objects;
+    }
+
+    public static T LogProperties<T>(this T @object)
+    {
+        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (PropertyInfo property in properties)
+            Console.WriteLine($"{property.Name}: {property.GetValue(@object)}");
+
+        if (properties.Length > 0)
+            Console.WriteLine("");
+
+        return @object;
     }
 }

@@ -76,6 +76,11 @@ public class MemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEntity
         return Result.SuccessTask();
     }
 
+    public Task<Result> Create(IEnumerable<TEntity> items)
+    {
+        throw new NotImplementedException();
+    }
+
     private class EntityData
     {
 

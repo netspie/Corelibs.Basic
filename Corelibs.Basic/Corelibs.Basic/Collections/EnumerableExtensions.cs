@@ -91,6 +91,19 @@ namespace Corelibs.Basic.Collections
             return enumerable;
         }
 
+        public static async Task<IEnumerable<T>> ForEachReversedAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> itemAction)
+        {
+            var list = enumerable.ToList();
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                var item = list[i];
+                if (item != null)
+                    await itemAction(item);
+            }
+
+            return enumerable;
+        }
+
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
         {
             return enumerable.IsNull() || enumerable.IsEmpty();
