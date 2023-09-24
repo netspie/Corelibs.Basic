@@ -15,7 +15,7 @@ namespace Corelibs.Basic.DDD
         public Entity(TId id) => Id = id;
 
         [Ignore]
-        public List<INotification> DomainEvents { get; private set; } = new();
+        public List<IDomainEvent> DomainEvents { get; private set; } = new();
 
         public Entity(TId id, uint version)
         {
@@ -27,7 +27,7 @@ namespace Corelibs.Basic.DDD
 
         public static implicit operator bool(Entity<TId> entity) => entity != null;
 
-        protected void Add(INotification @event) => DomainEvents.Add(@event);
+        protected void Add(IDomainEvent @event) => DomainEvents.Add(@event);
 
         public override bool Equals(object? obj)
         {
