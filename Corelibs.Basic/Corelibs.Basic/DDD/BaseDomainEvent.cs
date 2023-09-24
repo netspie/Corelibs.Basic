@@ -1,6 +1,6 @@
 ﻿namespace Corelibs.Basic.DDD;
 
-public class BaseDomainEvent : IDomainEvent
+public abstract class BaseDomainEvent : IDomainEvent
 {
     public required string Id { get; init; }
 
