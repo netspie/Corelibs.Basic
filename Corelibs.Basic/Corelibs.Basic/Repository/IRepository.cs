@@ -15,6 +15,7 @@ public interface IRepository<TEntity, TEntityId> : IRepository
     Task<Result<TEntity[]>> GetAll();
     Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct);
     Task<Result> Save(TEntity item);
+    Task<Result> Create(TEntity item);
     Task<Result> Create(IEnumerable<TEntity> items);
     Task<Result> Clear();
     Task<Result> Delete(TEntityId id);

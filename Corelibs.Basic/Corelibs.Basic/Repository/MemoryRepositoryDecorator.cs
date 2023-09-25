@@ -81,4 +81,9 @@ public class MemoryRepositoryDecorator<TEntity, TEntityId> : IMemoryRepository<T
     {
         return _otherRepository.Create(items);
     }
+
+    public Task<Result> Create(TEntity item)
+    {
+        return _otherRepository.Create(item);
+    }
 }

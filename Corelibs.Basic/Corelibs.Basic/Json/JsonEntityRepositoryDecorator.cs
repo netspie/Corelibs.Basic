@@ -30,6 +30,11 @@ namespace Corelibs.Basic.Json
             throw new NotImplementedException();
         }
 
+        public Task<Result> Create(TEntity item)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Result> Delete(TEntityId id)
         {
             return _jsonTableRepository.Delete(id);

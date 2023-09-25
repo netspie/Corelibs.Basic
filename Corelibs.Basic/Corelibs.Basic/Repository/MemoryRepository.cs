@@ -81,6 +81,11 @@ public class MemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEntity
         throw new NotImplementedException();
     }
 
+    public Task<Result> Create(TEntity item)
+    {
+        throw new NotImplementedException();
+    }
+
     private class EntityData
     {
 
