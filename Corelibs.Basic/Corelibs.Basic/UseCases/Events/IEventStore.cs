@@ -1,7 +1,7 @@
 ﻿using Corelibs.Basic.Blocks;
 using Corelibs.Basic.DDD;
 
-namespace Corelibs.Basic.UseCases;
+namespace Corelibs.Basic.UseCases.Events;
 
 public interface IEventStore
 {
