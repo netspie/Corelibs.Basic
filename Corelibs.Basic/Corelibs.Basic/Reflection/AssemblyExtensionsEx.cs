@@ -34,7 +34,10 @@ namespace Corelibs.Basic.Reflection
 
             Type[] allTypes = assembly.GetTypes();
 
-            return allTypes.Where(type => type.Namespace != null && type.Namespace.StartsWith(rootNamespace)).ToArray();
+            return allTypes.Where(type => 
+                type.Namespace != null && 
+                type.Namespace.StartsWith(rootNamespace) &&
+                !type.IsNested).ToArray();
         }
     }
 }
