@@ -104,6 +104,8 @@ namespace Corelibs.Basic.Repository
             return Result<string>.Success();
         }
 
+        public static async Task<T> Get<T, TId>(this IRepository<T, TId> repository, TId id) =>
+            (await repository.GetBy(id)).Value;
 
         public static Task<T> Get<T, TId>(this IRepository<T, TId> repository, TId id, Result result) =>
             repository.GetBy(id).Set(result);

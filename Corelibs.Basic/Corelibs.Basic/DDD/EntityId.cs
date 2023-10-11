@@ -2,7 +2,7 @@
 
 public abstract class EntityId
 {
-    public string Value { get; }
+    public string Value { get; init; }
 
     public EntityId(string value) => Value = value;
 
