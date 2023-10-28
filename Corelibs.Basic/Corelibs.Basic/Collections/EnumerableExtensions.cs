@@ -214,7 +214,7 @@ namespace Corelibs.Basic.Collections
             return source.Append(item);
         }
 
-        public static IEnumerable<TResult> SelectOrDefault<TSource, TResult>(
+        public static IEnumerable<TResult> SelectOrEmpty<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             if (source.IsNullOrEmpty())
@@ -223,14 +223,19 @@ namespace Corelibs.Basic.Collections
             return source.Select(selector);
         }
 
-
-        public static T[] ToArrayOrDefault<T>(this IEnumerable<T> source) =>
+        public static T[] ToArrayOrEmpty<T>(this IEnumerable<T>? source) =>
             source is null ? Array.Empty<T>() : source.ToArray();
 
-        public static List<T> ToListOrDefault<T>(this IEnumerable<T> source) =>
+        public static T[]? ToArrayOrDefault<T>(this IEnumerable<T>? source) =>
+            source is null ? null : source.ToArray();
+
+        public static List<T> ToListOrEmpty<T>(this IEnumerable<T>? source) =>
             source is null ? new() : source.ToList();
 
-        public static IEnumerable<TResult> SelectOrDefault<TSource, TResult>(
+        public static List<T>? ToListOrDefault<T>(this IEnumerable<T>? source) =>
+           source is null ? null : source.ToList();
+
+        public static IEnumerable<TResult> SelectOrEmpty<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
             if (source.IsNullOrEmpty())
@@ -239,7 +244,7 @@ namespace Corelibs.Basic.Collections
             return source.Select(selector);
         }
 
-        public static IEnumerable<TSource> InsertOrDefault<TSource>(this IEnumerable<TSource> source, int index, TSource item) =>
+        public static IEnumerable<TSource> InsertOrEmpty<TSource>(this IEnumerable<TSource> source, int index, TSource item) =>
             source is null ? 
                 Array.Empty<TSource>() : 
                 source
