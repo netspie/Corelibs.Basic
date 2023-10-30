@@ -86,4 +86,9 @@ public class MemoryRepositoryDecorator<TEntity, TEntityId> : IMemoryRepository<T
     {
         return _otherRepository.Create(item);
     }
+
+    public Task<TEntity[]> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
