@@ -1,5 +1,6 @@
 ﻿using Corelibs.Basic.Functional;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -221,6 +222,20 @@ namespace Corelibs.Basic.Collections
                 return Enumerable.Empty<TResult>();
 
             return source.Select(selector);
+        }
+
+        public static IEnumerable<T> ConcatOrEmpty<T>(this IEnumerable<T>? source, IEnumerable<T>? another)
+        {
+            if (source is null && another is null)
+                return Array.Empty<T>();
+
+            if (source is null)
+                return another;
+
+            if (another is null)
+                return source;
+
+            return source.Concat(another);
         }
 
         public static T[] ToArrayOrEmpty<T>(this IEnumerable<T>? source) =>
