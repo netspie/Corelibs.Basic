@@ -215,6 +215,14 @@ namespace Corelibs.Basic.Collections
             return source.Append(item);
         }
 
+        public static IEnumerable<TSource>? WhereOrDefault<TSource>(
+            this IEnumerable<TSource>? source, Func<TSource, bool> predicate) =>
+            source is null ? null : source.Where(predicate);
+
+        public static IEnumerable<TResult>? SelectOrDefault<TSource, TResult>(
+            this IEnumerable<TSource>? source, Func<TSource, TResult> selector) =>
+            source is null ? null : source.Select(selector);
+
         public static IEnumerable<TResult> SelectOrEmpty<TSource, TResult>(
             this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
