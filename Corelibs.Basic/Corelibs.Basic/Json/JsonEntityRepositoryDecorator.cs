@@ -58,6 +58,19 @@ namespace Corelibs.Basic.Json
             return Result<TEntity[]>.Success(entities);
         }
 
+        public async Task<TEntity[]> GetAllAsync()
+        {
+            var result = Result<TEntity[]>.Success();
+
+            var jsonEntitiesResult = await _jsonTableRepository.GetAll();
+            if (!jsonEntitiesResult.ValidateSuccessAndValues())
+                throw new Exception();
+
+            var jsonEntities = jsonEntitiesResult.Get();
+            var entities = jsonEntities.Select(e => _jsonConverter.Deserialize<TEntity>(e.Content)).ToArray();
+            return entities;
+        }
+
         public Task<Result<TEntity[]>> GetAll(Action<int> setProgress, CancellationToken ct)
         {
             throw new NotImplementedException();

@@ -86,6 +86,11 @@ public class MemoryRepository<TEntity, TEntityId> : IRepository<TEntity, TEntity
         throw new NotImplementedException();
     }
 
+    public Task<TEntity[]> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     private class EntityData
     {
 
